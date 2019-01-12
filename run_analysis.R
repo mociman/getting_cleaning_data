@@ -95,11 +95,11 @@ train <- merge(train,activity_labels, by.x="activity",by.y="id", all=TRUE)
 train <- select(train,activity_name,subject,3:68)
 
 #bind train and test
-finalized_data <- rbind(train,test)
-str(finalized_data)
+har_detail <- rbind(train,test)
+str(har_detail)
 
 #create separate dataset with average of each variable for each activity and 
 #each subject
-new_set<-ddply(finalized_data,.(activity_name,subject),numcolwise(mean))
-View(new_set)
+har_summary<-ddply(har_detail,.(activity_name,subject),numcolwise(mean))
+View(har_summary)
 

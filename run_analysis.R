@@ -1,10 +1,14 @@
 # load all libraries needed
 library(plyr)
 library(dplyr)
-library(tidyr)
 
-##set environment variables
-file_location <- "E:/Learning/Repos/getting_cleaning_data/UCI_HAR_Dataset"
+##set environment variables, point this to your data sets folder
+# setwd("E:/Learning/Repos/getting_cleaning_data/")
+
+# change this if you prefer to put the files in a sub folder in your working directory
+data_location <- ""
+file_location <- paste0(getwd(),data_location)
+
 
 ##prepare datasets from files
 features <- read.csv(paste0(file_location,"/features.txt"), header=FALSE, sep="", 
@@ -13,7 +17,7 @@ features <- tbl_df(features)
 ## create column_names set -- will be used for x sets
 column_names <- as.data.frame(t(features[,2]))
 
-
+## get activities description/name
 activity_labels <- read.csv(paste0(file_location,"/activity_labels.txt"), header=FALSE, sep="", 
                             stringsAsFactors = FALSE)
 activity_labels <- tbl_df(activity_labels)
@@ -103,3 +107,5 @@ str(har_detail)
 har_summary<-ddply(har_detail,.(activity_name,subject),numcolwise(mean))
 View(har_summary)
 
+# create har_summary text file
+write.table(har_summary, paste0(getwd(),"/har_summary.txt"), row.names=FALSE)
